@@ -1,8 +1,67 @@
 #!/bin/bash
 
-echo ----- DOWNLOADING -----
+# Currently only running for 500k TIGER features. Can simplify them as needed.
 
-# echo ---- NATURAL EARTH
+
+echo ----- US TIGER ----------------------------------------------------------
+
+echo DOWNLOADING 
+
+echo boundary
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_nation_5m.zip
+curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_nation_20m.zip
+
+echo county
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_5m.zip
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_20m.zip
+curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_500k.zip
+
+echo division
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_division_5m.zip
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_division_20m.zip
+curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_division_500k.zip
+
+echo region
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_region_5m.zip
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_region_20m.zip
+curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_region_500k.zip
+
+echo state
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_5m.zip
+#curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_20m.zip
+curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_500k.zip
+
+
+echo MAKING GEOJSONS # -simplify 0.001 
+
+echo boundary
+#ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 maxres/cb_2018_us_nation_5m.json /vsizip/cb_2018_us_nation_5m.zip
+ogr2ogr -f geojson -t_srs EPSG:4326 maxres/cb_2018_us_nation_20m.json /vsizip/cb_2018_us_nation_20m.zip
+
+echo county
+#ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 maxres/cb_2018_us_county_5m.json /vsizip/cb_2018_us_county_5m.zip
+#ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 maxres/cb_2018_us_county_20m.json /vsizip/cb_2018_us_county_20m.zip
+ogr2ogr -f geojson -t_srs EPSG:4326 maxres/cb_2018_us_county_500k.json /vsizip/cb_2018_us_county_500k.zip
+
+echo division
+#ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 maxres/cb_2018_us_division_5m.json /vsizip/cb_2018_us_division_5m.zip
+#ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 maxres/cb_2018_us_division_20m.json /vsizip/cb_2018_us_division_20m.zip
+ogr2ogr -f geojson -t_srs EPSG:4326 maxres/cb_2018_us_division_500k.json /vsizip/cb_2018_us_division_500k.zip
+
+echo region
+#ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 maxres/cb_2018_us_region_5m.json /vsizip/cb_2018_us_region_5m.zip
+#ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 maxres/cb_2018_us_region_20m.json /vsizip/cb_2018_us_region_20m.zip
+ogr2ogr -f geojson -t_srs EPSG:4326 maxres/cb_2018_us_region_500k.json /vsizip/cb_2018_us_region_500k.zip
+
+echo state
+#ogr2ogr -f geojson -t_srs EPSG:4326 maxres/cb_2018_us_state_5m.json /vsizip/cb_2018_us_state_5m.zip
+#ogr2ogr -f geojson -t_srs EPSG:4326 maxres/cb_2018_us_state_20m.json /vsizip/cb_2018_us_state_20m.zip
+ogr2ogr -f geojson -t_srs EPSG:4326 maxres/cb_2018_us_state_500k.json /vsizip/cb_2018_us_state_500k.zip
+
+
+# echo ----- NATURAL EARTH ---------------------------------------------------
+
+# echo DOWNLOADING
 
 # echo countries
 # curl -O https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
@@ -27,35 +86,8 @@ echo ----- DOWNLOADING -----
 # curl -O https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_populated_places.zip
 # curl -O https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/110m/cultural/ne_110m_populated_places_simple.zip
 
-echo --- US TIGER
 
-echo boundary
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_nation_5m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_nation_20m.zip
-
-echo county
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_5m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_20m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_county_500k.zip
-
-echo division
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_division_5m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_division_20m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_division_500k.zip
-
-echo region
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_region_5m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_region_20m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_region_500k.zip
-
-echo state
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_5m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_20m.zip
-curl -O https://www2.census.gov/geo/tiger/GENZ2018/shp/cb_2018_us_state_500k.zip
-
-echo ----- MAKING GEOJSONS -----
-
-# echo --- NATURAL EARTH
+# echo MAKING GEOJSONS
 
 # echo countries
 # ogr2ogr -f geojson -t_srs EPSG:4326 ne_110m_admin_0_countries.json /vsizip/ne_110m_admin_0_countries.zip
@@ -80,28 +112,11 @@ echo ----- MAKING GEOJSONS -----
 # ogr2ogr -f geojson -t_srs EPSG:4326 ne_110m_populated_places.json /vsizip/ne_110m_populated_places.zip
 # ogr2ogr -f geojson -t_srs EPSG:4326 ne_110m_populated_places_simple.json /vsizip/ne_110m_populated_places_simple.zip
 
-echo --- US TIGER
 
-echo boundary
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_nation_5m.json /vsizip/cb_2018_us_nation_5m.zip
-ogr2ogr -f geojson -simplify 0.01 -t_srs EPSG:4326 cb_2018_us_nation_20m.json /vsizip/cb_2018_us_nation_20m.zip
+echo ----- SIMPLIFY ----------------------------------------------------------
 
-echo county
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_county_5m.json /vsizip/cb_2018_us_county_5m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_county_20m.json /vsizip/cb_2018_us_county_20m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_county_500k.json /vsizip/cb_2018_us_county_500k.zip
+echo "Generating some simplified versions for the GitHub renderer (<1MB)."
 
-echo division
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_division_5m.json /vsizip/cb_2018_us_division_5m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_division_20m.json /vsizip/cb_2018_us_division_20m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_division_500k.json /vsizip/cb_2018_us_division_500k.zip
-
-echo region
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_region_5m.json /vsizip/cb_2018_us_region_5m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_region_20m.json /vsizip/cb_2018_us_region_20m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_region_500k.json /vsizip/cb_2018_us_region_500k.zip
-
-echo state
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_state_5m.json /vsizip/cb_2018_us_state_5m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_state_20m.json /vsizip/cb_2018_us_state_20m.zip
-ogr2ogr -f geojson -simplify 0.001 -t_srs EPSG:4326 cb_2018_us_state_500k.json /vsizip/cb_2018_us_state_500k.zip
+ogr2ogr -f geojson -simplify 0.01 -t_srs EPSG:4326 cb_2018_us_division_500k-SIMPLE.json /vsizip/cb_2018_us_division_500k.zip
+ogr2ogr -f geojson -simplify 0.01 -t_srs EPSG:4326 cb_2018_us_region_500k-SIMPLE.json /vsizip/cb_2018_us_region_500k.zip
+ogr2ogr -f geojson -simplify 0.01 -t_srs EPSG:4326 cb_2018_us_state_500k-SIMPLE.json /vsizip/cb_2018_us_state_500k.zip
