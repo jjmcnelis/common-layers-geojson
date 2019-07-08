@@ -1,5 +1,15 @@
 # common vector datasets
-I made this repo to keep geojson copies of common vector datasets for convenient, semi-permanent access.
+This repo keeps geojson copies of common vector datasets for convenient, semi-permanent access.
+
+![docs/browse.PNG](docs/browse.png)
+*Simplified MODIS grid: [modis_sinusoidal-SIMPLE.json](modis_sinusoidal-SIMPLE.json). GitHub has this nice feature that renders GeoJSON objects.*
+
+The raw files can be read directly into processing routines. For example, in Python with `geopandas`:
+```python
+import geopandas as gpd
+
+gpd.read_file("https://raw.githubusercontent.com/jjmcnelis/common-layers-geojson/master/modis_sinusoidal-SIMPLE.json)
+```
 
 ## Sources
 
